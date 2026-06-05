@@ -4,17 +4,19 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Unit;
 
 @Environment(EnvType.CLIENT)
-public class TowerShieldModel extends Model implements ShieldModel {
+public class TowerShieldModel extends Model<Unit> implements ShieldModel {
 
     private final ModelPart plate;
     private final ModelPart handle;
 
     public TowerShieldModel(ModelPart root) {
-        super(root, RenderType::entitySolid);
+        super(root, RenderTypes::entitySolid);
         this.plate = root.getChild("plate");
         this.handle = root.getChild("handle");
     }

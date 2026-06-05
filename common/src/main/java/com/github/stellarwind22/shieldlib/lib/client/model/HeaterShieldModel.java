@@ -6,17 +6,19 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Unit;
 
-public class HeaterShieldModel extends Model implements ShieldModel {
+public class HeaterShieldModel extends Model<Unit> implements ShieldModel {
 
     private final ModelPart handle;
     private final ModelPart plate;
     public static final ModelLayerLocation LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield"), "main");
 
     public HeaterShieldModel(ModelPart root) {
-        super(root, RenderType::entitySolid);
+        super(root, RenderTypes::entitySolid);
         this.handle = root.getChild("handle");
         this.plate = root.getChild("plate");
     }
@@ -29,7 +31,7 @@ public class HeaterShieldModel extends Model implements ShieldModel {
         return LayerDefinition.create(meshDefinition, 64, 64);
     }
 
-    @Override public RenderType getRenderType(Identifier location) {return this.renderType(location);}
+    @Override public RenderType getRenderType(Identifier location) {return this.renderType.apply(location);}
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

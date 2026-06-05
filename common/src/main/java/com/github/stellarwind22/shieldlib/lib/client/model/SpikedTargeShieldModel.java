@@ -8,18 +8,20 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Unit;
 
 @Environment(EnvType.CLIENT)
-public class SpikedTargeShieldModel extends Model implements ShieldModel {
+public class SpikedTargeShieldModel extends Model<Unit> implements ShieldModel {
 
     private final ModelPart plate;
     private final ModelPart handle;
     public static final ModelLayerLocation LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_targe_shield"), "main");
 
     public SpikedTargeShieldModel(ModelPart root) {
-        super(root, RenderType::entitySolid);
+        super(root, RenderTypes::entitySolid);
         this.plate = root.getChild("plate");
         this.handle = root.getChild("handle");
     }

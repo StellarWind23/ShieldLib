@@ -6,8 +6,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.component.DataComponentMap;
@@ -75,7 +75,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
     }
 
     default void renderPatterns(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, boolean bl2, boolean bl3) {
-        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entitySolid, bl3, bl2), i, j);
+        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderTypes::entitySolid, bl3, bl2), i, j);
         renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, ShieldLibClient.getShapedBannerMaterial(this.model().shape(), Identifier.withDefaultNamespace("base")), dyeColor);
 
         for(int k = 0; k < 16 && k < bannerPatternLayers.layers().size(); ++k) {
@@ -88,6 +88,6 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
     default void renderPatternLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, DyeColor dyeColor) {
         int k = dyeColor.getTextureDiffuseColor();
-        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entityNoOutline), i, j, k);
+        modelPart.render(poseStack, material.buffer(multiBufferSource, RenderTypes::entityNoOutline), i, j, k);
     }
 }
