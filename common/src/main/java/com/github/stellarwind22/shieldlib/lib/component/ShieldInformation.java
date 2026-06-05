@@ -13,7 +13,7 @@ public record ShieldInformation(String type, List<String> features) {
 
     public static final Codec<ShieldInformation> CODEC = RecordCodecBuilder.create(
             (instance) -> instance.group(
-                    ExtraCodecs.NON_EMPTY_STRING.optionalFieldOf("shield_type", null).forGetter(ShieldInformation::type),
+                    ExtraCodecs.NON_EMPTY_STRING.optionalFieldOf("shield_type", "null").forGetter(ShieldInformation::type),
                     ExtraCodecs.NON_EMPTY_STRING.listOf().optionalFieldOf("features", List.of("none")).forGetter(ShieldInformation::features)
 
             ).apply(instance, ShieldInformation::new));

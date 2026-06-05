@@ -16,15 +16,15 @@ public class RecipeMixin {
             method = "matches(Lnet/minecraft/world/item/crafting/CraftingInput;Lnet/minecraft/world/level/Level;)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z")
     )
-    private boolean wrapMatches(ItemStack itemStack, Item instance, Operation<Boolean> original) {
-        return original.call(itemStack, instance) || ShieldLibUtils.supportsBanner(itemStack);
+    private boolean wrapMatches(ItemStack itemStack, Item arg, Operation<Boolean> original) {
+        return original.call(itemStack, arg) || ShieldLibUtils.supportsBanner(itemStack);
     }
 
     @WrapOperation(
             method = "assemble(Lnet/minecraft/world/item/crafting/CraftingInput;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/item/ItemStack;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z")
     )
-    private boolean wrapAssemble(ItemStack itemstack, Item instance, Operation<Boolean> original) {
-        return original.call(itemstack, instance) || ShieldLibUtils.supportsBanner(itemstack);
+    private boolean wrapAssemble(ItemStack itemstack, Item arg, Operation<Boolean> original) {
+        return original.call(itemstack, arg) || ShieldLibUtils.supportsBanner(itemstack);
     }
 }

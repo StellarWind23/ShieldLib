@@ -37,8 +37,8 @@ public class ShieldLibTests {
     protected static RegistrySupplier<Item> SPIKED_HEATER_SHIELD;
     protected static RegistrySupplier<Item> SPIKED_TARGE_SHIELD;
 
-    protected static Identifier REFLECT_ID = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
-    protected static Identifier RECOVERY_ID = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "recovery");
+    protected static final Identifier REFLECT_ID = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
+    protected static final Identifier RECOVERY_ID = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "recovery");
 
     public static void init() {
 

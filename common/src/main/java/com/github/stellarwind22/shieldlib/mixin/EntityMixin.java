@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityMixin {
 
     @Inject(at = @At("TAIL"), method = "push(Lnet/minecraft/world/entity/Entity;)V")
-    private void push(Entity other, CallbackInfo ci) {
+    private void push(Entity entity, CallbackInfo ci) {
         Entity self = (Entity) (Object) this;
 
         if (self instanceof Player player && player.isBlocking()) {
@@ -30,7 +30,7 @@ public class EntityMixin {
 
                 if (!player.level().isClientSide() && player.level() instanceof ServerLevel serverLevel) {
 
-                    Vec3 otherPos = other.position();
+                    Vec3 otherPos = entity.position();
                     double angle;
                     if(otherPos != null) {
                         Vec3 viewVector = self.calculateViewVector(0.0F, self.getYHeadRot());
@@ -43,7 +43,7 @@ public class EntityMixin {
 
                     float resolved = blocksAttacks.resolveBlockedDamage(player.damageSources().playerAttack(player), 100.0F, angle);
                     boolean withinAngle = resolved > 0;
-                    ShieldEvents.COLLIDE.invoker().onCollide(serverLevel, player, other, withinAngle, player.getUsedItemHand(), shield);
+                    ShieldEvents.COLLIDE.invoker().onCollide(serverLevel, player, entity, withinAngle, player.getUsedItemHand(), shield);
                 }
             }
         }
