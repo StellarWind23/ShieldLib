@@ -7,13 +7,13 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class HeaterShieldModel extends Model implements ShieldModel {
 
     private final ModelPart handle;
     private final ModelPart plate;
-    public static final ModelLayerLocation LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield"), "main");
+    public static final ModelLayerLocation LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield"), "main");
 
     public HeaterShieldModel(ModelPart root) {
         super(root, RenderType::entitySolid);
@@ -29,7 +29,7 @@ public class HeaterShieldModel extends Model implements ShieldModel {
         return LayerDefinition.create(meshDefinition, 64, 64);
     }
 
-    @Override public RenderType getRenderType(ResourceLocation location) {return this.renderType(location);}
+    @Override public RenderType getRenderType(Identifier location) {return this.renderType(location);}
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

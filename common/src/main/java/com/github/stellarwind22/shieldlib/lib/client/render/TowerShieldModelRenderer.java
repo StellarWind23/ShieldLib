@@ -10,28 +10,28 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class TowerShieldModelRenderer implements ShieldModelRenderer {
 
-    private final ResourceLocation baseModel, baseModelNoPat;
+    private final Identifier baseModel, baseModelNoPat;
     private final TowerShieldModel model;
 
-    public TowerShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, TowerShieldModel model) {
+    public TowerShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, TowerShieldModel model) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
     }
 
     @Override
-    public ResourceLocation baseModel() {
+    public Identifier baseModel() {
         return this.baseModel;
     }
 
     @Override
-    public ResourceLocation baseModelNoPat() {
+    public Identifier baseModelNoPat() {
         return this.baseModelNoPat;
     }
 
@@ -40,12 +40,12 @@ public class TowerShieldModelRenderer implements ShieldModelRenderer {
         return this.model;
     }
 
-    public record Unbaked(ResourceLocation baseModel, ResourceLocation baseModelNoPat) implements SpecialModelRenderer.Unbaked {
+    public record Unbaked(Identifier baseModel, Identifier baseModelNoPat) implements SpecialModelRenderer.Unbaked {
 
         public static final MapCodec<TowerShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(TowerShieldModelRenderer.Unbaked::baseModel),
-                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(TowerShieldModelRenderer.Unbaked::baseModelNoPat)
+                        Identifier.CODEC.fieldOf("texture_banner").forGetter(TowerShieldModelRenderer.Unbaked::baseModel),
+                        Identifier.CODEC.fieldOf("texture_default").forGetter(TowerShieldModelRenderer.Unbaked::baseModelNoPat)
                 ).apply(instance, TowerShieldModelRenderer.Unbaked::new)
         );
 

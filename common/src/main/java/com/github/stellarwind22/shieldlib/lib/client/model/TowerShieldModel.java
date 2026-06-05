@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class TowerShieldModel extends Model implements ShieldModel {
@@ -19,7 +19,7 @@ public class TowerShieldModel extends Model implements ShieldModel {
         this.handle = root.getChild("handle");
     }
 
-    @Override public RenderType getRenderType(ResourceLocation location) {return this.renderType(location);}
+    @Override public RenderType getRenderType(Identifier location) {return this.renderType(location);}
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

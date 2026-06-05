@@ -11,29 +11,29 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class TargeShieldModelRenderer implements ShieldModelRenderer {
 
-    private final ResourceLocation baseModel, baseModelNoPat;
+    private final Identifier baseModel, baseModelNoPat;
     private final TargeShieldModel model;
-    public static final ModelLayerLocation TARGE_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield"), "main");
+    public static final ModelLayerLocation TARGE_MODEL_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield"), "main");
 
-    public TargeShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, TargeShieldModel model) {
+    public TargeShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, TargeShieldModel model) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
     }
 
     @Override
-    public ResourceLocation baseModel() {
+    public Identifier baseModel() {
         return this.baseModel;
     }
 
     @Override
-    public ResourceLocation baseModelNoPat() {
+    public Identifier baseModelNoPat() {
         return this.baseModelNoPat;
     }
 
@@ -42,12 +42,12 @@ public class TargeShieldModelRenderer implements ShieldModelRenderer {
         return this.model;
     }
 
-    public record Unbaked(ResourceLocation baseModel, ResourceLocation baseModelNoPat) implements SpecialModelRenderer.Unbaked {
+    public record Unbaked(Identifier baseModel, Identifier baseModelNoPat) implements SpecialModelRenderer.Unbaked {
 
         public static final MapCodec<TargeShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(TargeShieldModelRenderer.Unbaked::baseModel),
-                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(TargeShieldModelRenderer.Unbaked::baseModelNoPat)
+                        Identifier.CODEC.fieldOf("texture_banner").forGetter(TargeShieldModelRenderer.Unbaked::baseModel),
+                        Identifier.CODEC.fieldOf("texture_default").forGetter(TargeShieldModelRenderer.Unbaked::baseModelNoPat)
                 ).apply(instance, TargeShieldModelRenderer.Unbaked::new)
         );
 

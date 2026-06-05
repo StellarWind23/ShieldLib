@@ -11,29 +11,29 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class SpikedHeaterShieldModelRenderer implements ShieldModelRenderer {
 
-    private final ResourceLocation baseModel, baseModelNoPat;
+    private final Identifier baseModel, baseModelNoPat;
     private final SpikedHeaterShieldModel model;
-    public static final ModelLayerLocation SPIKED_HEATER_MODEL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield"), "main");
+    public static final ModelLayerLocation SPIKED_HEATER_MODEL_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield"), "main");
 
-    public SpikedHeaterShieldModelRenderer(ResourceLocation baseModel, ResourceLocation baseModelNoPat, SpikedHeaterShieldModel model) {
+    public SpikedHeaterShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, SpikedHeaterShieldModel model) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
     }
 
     @Override
-    public ResourceLocation baseModel() {
+    public Identifier baseModel() {
         return this.baseModel;
     }
 
     @Override
-    public ResourceLocation baseModelNoPat() {
+    public Identifier baseModelNoPat() {
         return this.baseModelNoPat;
     }
 
@@ -42,12 +42,12 @@ public class SpikedHeaterShieldModelRenderer implements ShieldModelRenderer {
         return this.model;
     }
 
-    public record Unbaked(ResourceLocation baseModel, ResourceLocation baseModelNoPat) implements SpecialModelRenderer.Unbaked {
+    public record Unbaked(Identifier baseModel, Identifier baseModelNoPat) implements SpecialModelRenderer.Unbaked {
 
         public static final MapCodec<SpikedHeaterShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        ResourceLocation.CODEC.fieldOf("texture_banner").forGetter(SpikedHeaterShieldModelRenderer.Unbaked::baseModel),
-                        ResourceLocation.CODEC.fieldOf("texture_default").forGetter(SpikedHeaterShieldModelRenderer.Unbaked::baseModelNoPat)
+                        Identifier.CODEC.fieldOf("texture_banner").forGetter(SpikedHeaterShieldModelRenderer.Unbaked::baseModel),
+                        Identifier.CODEC.fieldOf("texture_default").forGetter(SpikedHeaterShieldModelRenderer.Unbaked::baseModelNoPat)
                 ).apply(instance, SpikedHeaterShieldModelRenderer.Unbaked::new)
         );
 

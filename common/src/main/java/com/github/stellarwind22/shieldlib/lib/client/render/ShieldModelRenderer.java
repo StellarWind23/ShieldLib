@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -25,8 +25,8 @@ import java.util.Set;
 
 public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentMap> {
 
-    ResourceLocation baseModel();
-    ResourceLocation baseModelNoPat();
+    Identifier baseModel();
+    Identifier baseModelNoPat();
     ShieldModel model();
 
     @Override
@@ -76,7 +76,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
     default void renderPatterns(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, ModelPart modelPart, Material material, DyeColor dyeColor, BannerPatternLayers bannerPatternLayers, boolean bl2, boolean bl3) {
         modelPart.render(poseStack, material.buffer(multiBufferSource, RenderType::entitySolid, bl3, bl2), i, j);
-        renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, ShieldLibClient.getShapedBannerMaterial(this.model().shape(), ResourceLocation.withDefaultNamespace("base")), dyeColor);
+        renderPatternLayer(poseStack, multiBufferSource, i, j, modelPart, ShieldLibClient.getShapedBannerMaterial(this.model().shape(), Identifier.withDefaultNamespace("base")), dyeColor);
 
         for(int k = 0; k < 16 && k < bannerPatternLayers.layers().size(); ++k) {
             BannerPatternLayers.Layer layer = bannerPatternLayers.layers().get(k);

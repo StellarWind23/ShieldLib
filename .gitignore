@@ -32,3 +32,13 @@ bin/
 
 run/
 tmp/
+
+# helper scripts & templates
+
+*.py
+*.exe
+_*.json
+_*.png.mcmeta
+_*.bin
+
+!scripts/*.py

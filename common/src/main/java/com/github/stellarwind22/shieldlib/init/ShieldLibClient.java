@@ -23,7 +23,7 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.item.component.Weapon;
@@ -35,18 +35,18 @@ import java.util.*;
 @Environment(EnvType.CLIENT)
 public class ShieldLibClient {
 
-    public static final ResourceLocation TOWER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "tower_shield");
-    public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
-    public static final ResourceLocation HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield");
-    public static final ResourceLocation TARGE_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield");
-    public static final ResourceLocation SPIKED_TOWER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_tower_shield");
-    public static final ResourceLocation SPIKED_BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_buckler_shield");
-    public static final ResourceLocation SPIKED_HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield");
-    public static final ResourceLocation SPIKED_TARGE_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_targe_shield");
+    public static final Identifier TOWER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "tower_shield");
+    public static final Identifier BUCKLER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
+    public static final Identifier HEATER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield");
+    public static final Identifier TARGE_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield");
+    public static final Identifier SPIKED_TOWER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_tower_shield");
+    public static final Identifier SPIKED_BUCKLER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_buckler_shield");
+    public static final Identifier SPIKED_HEATER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield");
+    public static final Identifier SPIKED_TARGE_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_targe_shield");
 
-    public static final ResourceLocation SHIELD_ATLAS_LOCATION = ResourceLocation.withDefaultNamespace("textures/atlas/shield_patterns.png");
+    public static final Identifier SHIELD_ATLAS_LOCATION = Identifier.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
-    public static final ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
+    public static final ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
 
     public static boolean IS_DEV;
 
@@ -202,8 +202,8 @@ public class ShieldLibClient {
         return getShapedBannerMaterial(shape, bannerPattern.value().assetId());
     }
 
-    public static Material getShapedBannerMaterial(String shape, ResourceLocation assetId) {
-        Map<ResourceLocation, Material> map = SheetsAccessor.getShieldMaterials();
+    public static Material getShapedBannerMaterial(String shape, Identifier assetId) {
+        Map<Identifier, Material> map = SheetsAccessor.getShieldMaterials();
 
         if(!Objects.equals(shape, "tower")) {
             assetId = assetId.withPrefix(shape + "_");
