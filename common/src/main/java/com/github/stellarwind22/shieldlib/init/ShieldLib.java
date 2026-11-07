@@ -257,7 +257,6 @@ public final class ShieldLib {
         return cooldown;
     }
 
-    @Environment(EnvType.CLIENT)
     public static Set<Pair<String, Float>> getTagTranslations(ShieldInformation shieldInformation) {
         Set<Pair<String, Float>> set = new HashSet<>();
 

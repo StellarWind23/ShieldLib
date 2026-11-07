@@ -13,8 +13,6 @@ import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
@@ -32,7 +30,6 @@ import net.minecraft.world.phys.Vec2;
 
 import java.util.*;
 
-@Environment(EnvType.CLIENT)
 public class ShieldLibClient {
 
     public static final Identifier TOWER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "tower_shield");

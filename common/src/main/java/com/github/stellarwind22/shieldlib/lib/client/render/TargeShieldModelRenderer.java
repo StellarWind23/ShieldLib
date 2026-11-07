@@ -4,15 +4,12 @@ import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.github.stellarwind22.shieldlib.lib.client.model.TargeShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-@Environment(EnvType.CLIENT)
 public class TargeShieldModelRenderer implements ShieldModelRenderer {
 
     private final Identifier baseModel, baseModelNoPat;
