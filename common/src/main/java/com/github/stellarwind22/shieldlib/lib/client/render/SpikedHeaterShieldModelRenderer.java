@@ -1,10 +1,8 @@
 package com.github.stellarwind22.shieldlib.lib.client.render;
 
-import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.client.model.*;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
@@ -16,7 +14,6 @@ public class SpikedHeaterShieldModelRenderer implements ShieldModelRenderer {
 
     private final Identifier baseModel, baseModelNoPat;
     private final SpikedHeaterShieldModel model;
-    public static final ModelLayerLocation SPIKED_HEATER_MODEL_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield"), "main");
     private final SpriteGetter sprites;
 
     public SpikedHeaterShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, SpikedHeaterShieldModel model, SpriteGetter sprites) {
@@ -47,21 +44,21 @@ public class SpikedHeaterShieldModelRenderer implements ShieldModelRenderer {
     public record Unbaked(Identifier baseModel, Identifier baseModelNoPat)
             implements SpecialModelRenderer.Unbaked<DataComponentMap> {
 
-        public static final MapCodec<TowerShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
+        public static final MapCodec<SpikedHeaterShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Identifier.CODEC.fieldOf("texture_banner").forGetter(TowerShieldModelRenderer.Unbaked::baseModel),
-                        Identifier.CODEC.fieldOf("texture_default").forGetter(TowerShieldModelRenderer.Unbaked::baseModelNoPat)
-                ).apply(instance, TowerShieldModelRenderer.Unbaked::new)
+                        Identifier.CODEC.fieldOf("texture_banner").forGetter(SpikedHeaterShieldModelRenderer.Unbaked::baseModel),
+                        Identifier.CODEC.fieldOf("texture_default").forGetter(SpikedHeaterShieldModelRenderer.Unbaked::baseModelNoPat)
+                ).apply(instance, SpikedHeaterShieldModelRenderer.Unbaked::new)
         );
 
         @Override
-        public @NonNull MapCodec<TowerShieldModelRenderer.Unbaked> type() { return CODEC; }
+        public @NonNull MapCodec<SpikedHeaterShieldModelRenderer.Unbaked> type() { return CODEC; }
 
         @Override
         public SpecialModelRenderer<DataComponentMap> bake(SpecialModelRenderer.BakingContext context) {
             ModelPart root = context.entityModelSet().bakeLayer(SpikedHeaterShieldModel.LOCATION);
-            return new TowerShieldModelRenderer(baseModel, baseModelNoPat,
-                    new TowerShieldModel(root), context.sprites());
+            return new SpikedHeaterShieldModelRenderer(baseModel, baseModelNoPat,
+                    new SpikedHeaterShieldModel(root), context.sprites());
         }
     }
 }

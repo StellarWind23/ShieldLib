@@ -2,7 +2,6 @@ package com.github.stellarwind22.shieldlib.lib.client.render;
 
 import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.github.stellarwind22.shieldlib.lib.client.model.TargeShieldModel;
-import com.github.stellarwind22.shieldlib.lib.client.model.TowerShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.model.geom.ModelPart;
@@ -47,21 +46,22 @@ public class TargeShieldModelRenderer implements ShieldModelRenderer {
     public record Unbaked(Identifier baseModel, Identifier baseModelNoPat)
             implements SpecialModelRenderer.Unbaked<DataComponentMap> {
 
-        public static final MapCodec<TowerShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
+        public static final MapCodec<TargeShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                        Identifier.CODEC.fieldOf("texture_banner").forGetter(TowerShieldModelRenderer.Unbaked::baseModel),
-                        Identifier.CODEC.fieldOf("texture_default").forGetter(TowerShieldModelRenderer.Unbaked::baseModelNoPat)
-                ).apply(instance, TowerShieldModelRenderer.Unbaked::new)
+                        Identifier.CODEC.fieldOf("texture_banner").forGetter(TargeShieldModelRenderer.Unbaked::baseModel),
+                        Identifier.CODEC.fieldOf("texture_default").forGetter(TargeShieldModelRenderer.Unbaked::baseModelNoPat)
+                ).apply(instance, TargeShieldModelRenderer.Unbaked::new)
         );
 
         @Override
-        public @NonNull MapCodec<TowerShieldModelRenderer.Unbaked> type() { return CODEC; }
+        public @NonNull MapCodec<TargeShieldModelRenderer.Unbaked> type() { return CODEC; }
 
         @Override
         public SpecialModelRenderer<DataComponentMap> bake(SpecialModelRenderer.BakingContext context) {
+            System.out.println("Baking " + getClass().getName() + " layer=" + TargeShieldModel.LOCATION);
             ModelPart root = context.entityModelSet().bakeLayer(TargeShieldModel.LOCATION);
-            return new TowerShieldModelRenderer(baseModel, baseModelNoPat,
-                    new TowerShieldModel(root), context.sprites());
+            return new TargeShieldModelRenderer(baseModel, baseModelNoPat,
+                    new TargeShieldModel(root), context.sprites());
         }
     }
 }

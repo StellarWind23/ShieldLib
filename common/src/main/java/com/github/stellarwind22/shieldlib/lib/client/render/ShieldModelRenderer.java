@@ -37,14 +37,16 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
     @Override
     default void getExtents(@NonNull Consumer<Vector3fc> output) {
-        this.model().getRoot().getExtentsForGui(new PoseStack(), output);
+        PoseStack poseStack = new PoseStack();
+        poseStack.scale(1.0F, -1.0F, -1.0F);
+        this.model().getRoot().getExtentsForGui(poseStack, output);
     }
 
     @Override
     default void submit(@Nullable DataComponentMap components, @NonNull PoseStack poseStack,
                         SubmitNodeCollector collector, int light, int overlay,
                         boolean hasFoil, int outlineColor) {
-
+        poseStack.scale(1.0F, -1.0F, -1.0F);
         BannerPatternLayers patterns = components != null
                 ? components.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY)
                 : BannerPatternLayers.EMPTY;
