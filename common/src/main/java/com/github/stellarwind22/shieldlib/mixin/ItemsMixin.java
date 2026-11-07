@@ -26,7 +26,18 @@ public class ItemsMixin {
     private static Item.Properties assignVanillaShieldEnchantability(Item.Properties properties) {
         return properties
                 .durability(ShieldLibConfig.vanilla_shield_durability)
-                .enchantable(ShieldLibConfig.vanilla_shield_enchantability)
-                .delayedComponent(DataComponents.BLOCKS_ATTACKS, ShieldLibUtils::vanillaShieldBlocksAttacks);
+                .enchantable(ShieldLibConfig.vanilla_shield_enchantability);
+    }
+
+    @ModifyExpressionValue(
+            method = "<clinit>",
+            slice = @Slice(
+                    from = @At(value = "CONSTANT", args = "stringValue=shield"),
+                    to = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "Lnet/minecraft/world/item/Items;SHIELD:Lnet/minecraft/world/item/Item;")
+            ),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item$Properties;delayedComponent(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/core/component/DataComponentInitializers$SingleComponentInitializer;)Lnet/minecraft/world/item/Item$Properties;")
+    )
+    private static Item.Properties overrideVanillaShieldBlocksAttacks(Item.Properties properties) {
+        return properties.delayedComponent(DataComponents.BLOCKS_ATTACKS, ShieldLibUtils::vanillaShieldBlocksAttacks);
     }
 }

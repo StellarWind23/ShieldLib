@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_special_shielddecoration",
+  "banner": "#minecraft:banners",
+  "result": {
+    "id": "shieldlib:targe_shield"
+  },
+  "target": "shieldlib:targe_shield"
+}
