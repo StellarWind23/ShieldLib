@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface SpecialModelRenderersAccessor {
 
     @Accessor(value = "ID_MAPPER")
-    static ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked>> getIDMapper() {
+    static ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked<?>>> getIDMapper() {
         throw new AssertionError();
     }
 }

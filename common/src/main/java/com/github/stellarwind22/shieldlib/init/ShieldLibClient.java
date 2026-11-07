@@ -7,17 +7,14 @@ import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
-import com.github.stellarwind22.shieldlib.mixin.client.SheetsAccessor;
-import com.github.stellarwind22.shieldlib.mixin.client.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -43,7 +40,7 @@ public class ShieldLibClient {
 
     public static final Identifier SHIELD_ATLAS_LOCATION = Identifier.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
-    public static final ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
+    public static final ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked<?>>> ID_MAPPER = Sheets.SHIELD_MAPPER;
 
     public static boolean IS_DEV;
 
@@ -195,19 +192,16 @@ public class ShieldLibClient {
         }
     }
 
-    public static Material getShapedBannerMaterial(String shape, Holder<BannerPattern> bannerPattern) {
-        return getShapedBannerMaterial(shape, bannerPattern.value().assetId());
+    private static final Map<Identifier, SpriteId> SHAPED_SPRITES = new HashMap<>();
+
+    public static SpriteId getShapedSprite(String shape, Holder<BannerPattern> pattern) {
+        return getShapedSprite(shape, pattern.value().assetId());
     }
 
-    public static Material getShapedBannerMaterial(String shape, Identifier assetId) {
-        Map<Identifier, Material> map = SheetsAccessor.getShieldMaterials();
-
-        if(!Objects.equals(shape, "tower")) {
+    public static SpriteId getShapedSprite(String shape, Identifier assetId) {
+        if (!Objects.equals(shape, "tower")) {
             assetId = assetId.withPrefix(shape + "_");
         }
-
-        MaterialMapper mapper = Sheets.SHIELD_MAPPER;
-        Objects.requireNonNull(mapper);
-        return map.computeIfAbsent(assetId, mapper::apply);
+        return SHAPED_SPRITES.computeIfAbsent(assetId, Sheets.SHIELD_MAPPER::apply);
     }
 }

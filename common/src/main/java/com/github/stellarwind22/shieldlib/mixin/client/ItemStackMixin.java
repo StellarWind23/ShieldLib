@@ -18,12 +18,12 @@ import java.util.List;
 public class ItemStackMixin {
 
     @Inject(at = @At("RETURN"), method = "getTooltipLines")
-    private void addDetailsToTooltip(Item.TooltipContext tooltipContext, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
+    private void addDetailsToTooltip(Item.TooltipContext context, Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
         ItemStack self = (ItemStack) (Object) this;
 
         //Only add tooltips to shields
         if(ShieldLibUtils.isShieldItem(self)) {
-           ShieldClientEvents.TOOLTIP.invoker().onTooltip(player, self, tooltipContext, tooltipFlag, cir.getReturnValue());
+           ShieldClientEvents.TOOLTIP.invoker().onTooltip(player, self, context, tooltipFlag, cir.getReturnValue());
         }
     }
 }

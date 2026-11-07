@@ -7,27 +7,23 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.resources.model.MaterialSet;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.Identifier;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 public class TowerShieldModelRenderer implements ShieldModelRenderer {
 
     private final Identifier baseModel, baseModelNoPat;
     private final TowerShieldModel model;
-    private final MaterialSet materials;
+    private final SpriteGetter sprites;
 
     public TowerShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat,
-                                    TowerShieldModel model, MaterialSet materials) {
+                                    TowerShieldModel model, SpriteGetter sprites) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
-        this.materials = materials;
-    }
-
-    @Override
-    public MaterialSet materials() {
-        return this.materials;
+        this.sprites = sprites;
     }
 
     @Override
@@ -45,7 +41,11 @@ public class TowerShieldModelRenderer implements ShieldModelRenderer {
         return this.model;
     }
 
-    public record Unbaked(Identifier baseModel, Identifier baseModelNoPat) implements SpecialModelRenderer.Unbaked {
+    @Override
+    public SpriteGetter sprites() { return this.sprites; }
+
+    public record Unbaked(Identifier baseModel, Identifier baseModelNoPat)
+            implements SpecialModelRenderer.Unbaked<DataComponentMap> {
 
         public static final MapCodec<TowerShieldModelRenderer.Unbaked> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
@@ -55,19 +55,13 @@ public class TowerShieldModelRenderer implements ShieldModelRenderer {
         );
 
         @Override
-        public @NotNull MapCodec<TowerShieldModelRenderer.Unbaked> type() {
-            return CODEC;
-        }
+        public @NonNull MapCodec<Unbaked> type() { return CODEC; }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+        public SpecialModelRenderer<DataComponentMap> bake(SpecialModelRenderer.BakingContext context) {
             ModelPart root = context.entityModelSet().bakeLayer(ModelLayers.SHIELD);
-            return new TowerShieldModelRenderer(
-                    this.baseModel,
-                    this.baseModelNoPat,
-                    new TowerShieldModel(root),
-                    context.materials()
-            );
+            return new TowerShieldModelRenderer(baseModel, baseModelNoPat,
+                    new TowerShieldModel(root), context.sprites());
         }
     }
 }
