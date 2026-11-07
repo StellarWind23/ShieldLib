@@ -6,7 +6,6 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
@@ -43,7 +42,6 @@ public class SpikedTowerShieldModel extends Model<Unit> implements ShieldModel {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    @Override public RenderType getRenderType(Identifier location) {return this.renderType(location);}
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

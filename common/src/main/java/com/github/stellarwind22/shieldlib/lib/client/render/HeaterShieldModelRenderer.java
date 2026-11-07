@@ -7,10 +7,10 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,11 +20,18 @@ public class HeaterShieldModelRenderer implements ShieldModelRenderer {
     private final Identifier baseModel, baseModelNoPat;
     private final HeaterShieldModel model;
     public static final ModelLayerLocation HEATER_MODEL_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield"), "main");
+    private final MaterialSet materials;
 
-    public HeaterShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, HeaterShieldModel model) {
+    public HeaterShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, HeaterShieldModel model, MaterialSet materials) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
+        this.materials = materials;
+    }
+
+    @Override
+    public MaterialSet materials() {
+        return this.materials;
     }
 
     @Override
@@ -57,13 +64,13 @@ public class HeaterShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(HEATER_MODEL_LAYER);
-            HeaterShieldModel model = new HeaterShieldModel(root);
+        public @NotNull SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+            ModelPart root = context.entityModelSet().bakeLayer(HeaterShieldModel.LOCATION);
             return new HeaterShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
-                    model
+                    new HeaterShieldModel(root),
+                    context.materials()
             );
         }
     }

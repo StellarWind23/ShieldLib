@@ -1,16 +1,16 @@
 package com.github.stellarwind22.shieldlib.lib.client.render;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import com.github.stellarwind22.shieldlib.lib.client.model.BucklerShieldLibModel;
+import com.github.stellarwind22.shieldlib.lib.client.model.BucklerShieldModel;
 import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,14 +18,20 @@ import org.jetbrains.annotations.NotNull;
 public class BucklerShieldModelRenderer implements ShieldModelRenderer {
 
     private final Identifier baseModel, baseModelNoPat;
-    private final BucklerShieldLibModel model;
-
+    private final BucklerShieldModel model;
     public static final ModelLayerLocation BUCKLER_MODEL_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield"), "main");
+    private final MaterialSet materials;
 
-    public BucklerShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, BucklerShieldLibModel model) {
+    public BucklerShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, BucklerShieldModel model, MaterialSet materials) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
+        this.materials = materials;
+    }
+
+    @Override
+    public MaterialSet materials() {
+        return this.materials;
     }
 
     @Override
@@ -58,13 +64,13 @@ public class BucklerShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(BUCKLER_MODEL_LAYER);
-            BucklerShieldLibModel model = new BucklerShieldLibModel(root);
+        public @NotNull SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+            ModelPart root = context.entityModelSet().bakeLayer(BucklerShieldModel.LOCATION);
             return new BucklerShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
-                    model
+                    new BucklerShieldModel(root),
+                    context.materials()
             );
         }
     }

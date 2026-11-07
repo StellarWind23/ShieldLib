@@ -384,7 +384,7 @@ public class ShieldLibUtils {
         for (Holder<Enchantment> holder : enchants.keySet()) {
 
             holder.unwrapKey().ifPresent(key -> {
-                if(key.location().equals(enchantmentId)) {
+                if(key.identifier().equals(enchantmentId)) {
                     result.set(enchants.getLevel(holder));
                 }
             });

@@ -39,10 +39,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "${maven_group}.${modid}.fabric.${mod_name}Fabric"
+      "${maven_group}.${modid}.fabric.init.${mod_name}Fabric"
     ],
     "client": [
-      "${maven_group}.${modid}.fabric.client.${mod_name}FabricClient"
+      "${maven_group}.${modid}.fabric.init.${mod_name}FabricClient"
     ]
   },
   "mixins": [

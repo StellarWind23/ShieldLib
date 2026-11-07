@@ -1,10 +1,9 @@
-package com.github.stellarwind22.shieldlib.neoforge.init;
+package com.github.stellarwind23.shieldlib.neoforge.init;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import eu.midnightdust.lib.config.MidnightConfig;
-import eu.midnightdust.neoforge.MidnightLibNeoForge;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -17,12 +16,12 @@ import net.neoforged.fml.loading.FMLLoader;
 public final class ShieldLibNeoForge {
 
     public ShieldLibNeoForge() {
-        boolean isDev = !FMLEnvironment.production;
+        boolean isDev = !FMLEnvironment.isProduction();
 
         // Run our common setup.
         ShieldLib.init(isDev);
 
-        if(FMLLoader.getDist() == Dist.CLIENT) {
+        if(FMLLoader.getCurrent().getDist() == Dist.CLIENT) {
             ShieldLibClient.init(isDev);
         }
 

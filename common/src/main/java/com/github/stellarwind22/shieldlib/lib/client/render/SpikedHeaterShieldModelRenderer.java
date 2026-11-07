@@ -7,10 +7,10 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,11 +20,18 @@ public class SpikedHeaterShieldModelRenderer implements ShieldModelRenderer {
     private final Identifier baseModel, baseModelNoPat;
     private final SpikedHeaterShieldModel model;
     public static final ModelLayerLocation SPIKED_HEATER_MODEL_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield"), "main");
+    private final MaterialSet materials;
 
-    public SpikedHeaterShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, SpikedHeaterShieldModel model) {
+    public SpikedHeaterShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, SpikedHeaterShieldModel model, MaterialSet materials) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
+        this.materials = materials;
+    }
+
+    @Override
+    public MaterialSet materials() {
+        return this.materials;
     }
 
     @Override
@@ -57,13 +64,13 @@ public class SpikedHeaterShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(SPIKED_HEATER_MODEL_LAYER);
-            SpikedHeaterShieldModel model = new SpikedHeaterShieldModel(root);
+        public @NotNull SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+            ModelPart root = context.entityModelSet().bakeLayer(SpikedHeaterShieldModel.LOCATION);
             return new SpikedHeaterShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
-                    model
+                    new SpikedHeaterShieldModel(root),
+                    context.materials()
             );
         }
     }

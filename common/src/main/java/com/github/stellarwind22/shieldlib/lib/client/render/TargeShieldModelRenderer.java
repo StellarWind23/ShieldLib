@@ -1,16 +1,14 @@
 package com.github.stellarwind22.shieldlib.lib.client.render;
 
-import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.client.model.ShieldModel;
 import com.github.stellarwind22.shieldlib.lib.client.model.TargeShieldModel;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,12 +17,18 @@ public class TargeShieldModelRenderer implements ShieldModelRenderer {
 
     private final Identifier baseModel, baseModelNoPat;
     private final TargeShieldModel model;
-    public static final ModelLayerLocation TARGE_MODEL_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield"), "main");
+    private final MaterialSet materials;
 
-    public TargeShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, TargeShieldModel model) {
+    public TargeShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, TargeShieldModel model, MaterialSet materials) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
+        this.materials = materials;
+    }
+
+    @Override
+    public MaterialSet materials() {
+        return this.materials;
     }
 
     @Override
@@ -57,13 +61,13 @@ public class TargeShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(TARGE_MODEL_LAYER);
-            TargeShieldModel model = new TargeShieldModel(root);
+        public @NotNull SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+            ModelPart root = context.entityModelSet().bakeLayer(TargeShieldModel.LOCATION);
             return new TargeShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
-                    model
+                    new TargeShieldModel(root),
+                    context.materials()
             );
         }
     }

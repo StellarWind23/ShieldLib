@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.fabric.config;
+package com.github.stellarwind23.shieldlib.fabric.config;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;

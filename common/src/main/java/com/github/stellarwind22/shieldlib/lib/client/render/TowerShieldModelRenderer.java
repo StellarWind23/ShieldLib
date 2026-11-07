@@ -6,10 +6,10 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,11 +18,19 @@ public class TowerShieldModelRenderer implements ShieldModelRenderer {
 
     private final Identifier baseModel, baseModelNoPat;
     private final TowerShieldModel model;
+    private final MaterialSet materials;
 
-    public TowerShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, TowerShieldModel model) {
+    public TowerShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat,
+                                    TowerShieldModel model, MaterialSet materials) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
+        this.materials = materials;
+    }
+
+    @Override
+    public MaterialSet materials() {
+        return this.materials;
     }
 
     @Override
@@ -55,13 +63,13 @@ public class TowerShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(ModelLayers.SHIELD);
-            TowerShieldModel model = new TowerShieldModel(root);
+        public @NotNull SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+            ModelPart root = context.entityModelSet().bakeLayer(ModelLayers.SHIELD);
             return new TowerShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
-                    model
+                    new TowerShieldModel(root),
+                    context.materials()
             );
         }
     }

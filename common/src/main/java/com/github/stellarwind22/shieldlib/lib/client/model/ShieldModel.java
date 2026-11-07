@@ -1,15 +1,8 @@
 package com.github.stellarwind22.shieldlib.lib.client.model;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.resources.Identifier;
 
-
-@Environment(EnvType.CLIENT)
 public interface ShieldModel {
-    RenderType getRenderType(Identifier location);
     ModelPart getRoot();
     ModelPart handle();
     ModelPart plate();

@@ -31,7 +31,6 @@ public class HeaterShieldModel extends Model<Unit> implements ShieldModel {
         return LayerDefinition.create(meshDefinition, 64, 64);
     }
 
-    @Override public RenderType getRenderType(Identifier location) {return this.renderType.apply(location);}
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

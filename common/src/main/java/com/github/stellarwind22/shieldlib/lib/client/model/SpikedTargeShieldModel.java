@@ -1,19 +1,15 @@
 package com.github.stellarwind22.shieldlib.lib.client.model;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 
-@Environment(EnvType.CLIENT)
 public class SpikedTargeShieldModel extends Model<Unit> implements ShieldModel {
 
     private final ModelPart plate;
@@ -51,7 +47,6 @@ public class SpikedTargeShieldModel extends Model<Unit> implements ShieldModel {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    @Override public RenderType getRenderType(Identifier location) {return this.renderType(location);}
     @Override public ModelPart getRoot() {return this.root; }
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

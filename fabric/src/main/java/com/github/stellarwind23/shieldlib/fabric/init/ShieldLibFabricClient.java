@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.fabric.init;
+package com.github.stellarwind23.shieldlib.fabric.init;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import net.fabricmc.api.ClientModInitializer;

@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 
@@ -16,7 +16,7 @@ public class SpikedHeaterShieldModel extends Model<Unit> implements ShieldModel 
     public static final ModelLayerLocation LOCATION = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield"), "main");
 
     public SpikedHeaterShieldModel(ModelPart root) {
-        super(root, RenderType::entitySolid);
+        super(root, RenderTypes::entitySolid);
         this.plate = root.getChild("plate");
         this.handle = root.getChild("handle");
     }
@@ -37,7 +37,6 @@ public class SpikedHeaterShieldModel extends Model<Unit> implements ShieldModel 
         return LayerDefinition.create(meshDefinition, 64, 64);
     }
 
-    @Override public RenderType getRenderType(Identifier location) {return this.renderType(location);}
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

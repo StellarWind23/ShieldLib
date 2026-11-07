@@ -7,10 +7,10 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,13 +19,19 @@ public class SpikedBucklerShieldModelRenderer implements ShieldModelRenderer {
 
     private final Identifier baseModel, baseModelNoPat;
     private final SpikedBucklerShieldModel model;
-
     public static final ModelLayerLocation SPIKED_BUCKLER_MODEL_LAYER = new ModelLayerLocation(Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_buckler_shield"), "main");
+    private final MaterialSet materials;
 
-    public SpikedBucklerShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, SpikedBucklerShieldModel model) {
+    public SpikedBucklerShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, SpikedBucklerShieldModel model, MaterialSet materials) {
         this.baseModel = baseModel;
         this.baseModelNoPat = baseModelNoPat;
         this.model = model;
+        this.materials = materials;
+    }
+
+    @Override
+    public MaterialSet materials() {
+        return this.materials;
     }
 
     @Override
@@ -58,13 +64,13 @@ public class SpikedBucklerShieldModelRenderer implements ShieldModelRenderer {
         }
 
         @Override
-        public @NotNull SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
-            ModelPart root = entityModelSet.bakeLayer(SPIKED_BUCKLER_MODEL_LAYER);
-            SpikedBucklerShieldModel model = new SpikedBucklerShieldModel(root);
+        public @NotNull SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+            ModelPart root = context.entityModelSet().bakeLayer(SpikedBucklerShieldModel.LOCATION);
             return new SpikedBucklerShieldModelRenderer(
                     this.baseModel,
                     this.baseModelNoPat,
-                    model
+                    new SpikedBucklerShieldModel(root),
+                    context.materials()
             );
         }
     }

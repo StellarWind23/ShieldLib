@@ -1,15 +1,10 @@
 package com.github.stellarwind22.shieldlib.lib.client.model;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 
-@Environment(EnvType.CLIENT)
 public class TowerShieldModel extends Model<Unit> implements ShieldModel {
 
     private final ModelPart plate;
@@ -21,7 +16,6 @@ public class TowerShieldModel extends Model<Unit> implements ShieldModel {
         this.handle = root.getChild("handle");
     }
 
-    @Override public RenderType getRenderType(Identifier location) {return this.renderType(location);}
     @Override public ModelPart getRoot() {return this.root;}
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

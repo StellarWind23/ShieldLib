@@ -94,7 +94,7 @@ public class ShieldLibClient {
                 SpikedTargeShieldModelRenderer.Unbaked.CODEC
         );
 
-        EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION,       BucklerShieldLibModel::createLayer);
+        EntityModelLayerRegistry.register(BucklerShieldModel.LOCATION,       BucklerShieldModel::createLayer);
         EntityModelLayerRegistry.register(HeaterShieldModel.LOCATION,           HeaterShieldModel::createLayer);
         EntityModelLayerRegistry.register(TargeShieldModel.LOCATION,            TargeShieldModel::createLayer);
         EntityModelLayerRegistry.register(SpikedTowerShieldModel.LOCATION,      SpikedTowerShieldModel::createLayer);
