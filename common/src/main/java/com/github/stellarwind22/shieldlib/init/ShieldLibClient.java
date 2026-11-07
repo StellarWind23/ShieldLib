@@ -7,6 +7,7 @@ import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
+import com.github.stellarwind22.shieldlib.mixin.client.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
@@ -40,7 +41,8 @@ public class ShieldLibClient {
 
     public static final Identifier SHIELD_ATLAS_LOCATION = Identifier.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
-    public static final ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked<?>>> ID_MAPPER = Sheets.SHIELD_MAPPER;
+    public static final ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked<?>>> ID_MAPPER =
+            SpecialModelRenderersAccessor.getIDMapper();
 
     public static boolean IS_DEV;
 

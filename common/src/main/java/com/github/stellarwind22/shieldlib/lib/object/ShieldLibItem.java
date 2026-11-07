@@ -155,12 +155,9 @@ public class ShieldLibItem extends Item {
     public ShieldLibItem(Properties properties, float cooldownSeconds, int enchantability, @Nullable HolderSet<Item> repairItems) {
         super(attachRepairable(ShieldLibUtils.defaultShieldProperties(properties), repairItems)
                 .enchantable(enchantability)
-                .component(DataComponents.BLOCKS_ATTACKS,
-                        ShieldLibUtils.withCooldownSeconds(
-                                ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
-                                cooldownSeconds
-                        )
-                )
+                .delayedComponent(DataComponents.BLOCKS_ATTACKS,
+                        ctx -> ShieldLibUtils.withCooldownSeconds(
+                                ShieldLibUtils.vanillaShieldBlocksAttacks(ctx), cooldownSeconds))
         );
     }
 
@@ -174,12 +171,9 @@ public class ShieldLibItem extends Item {
     public ShieldLibItem(Properties properties, int cooldownTicks, int enchantability, @Nullable HolderSet<Item> repairItems) {
         super(attachRepairable(ShieldLibUtils.defaultShieldProperties(properties), repairItems)
                 .enchantable(enchantability)
-                .component(DataComponents.BLOCKS_ATTACKS,
-                        ShieldLibUtils.withCooldownTicks(
-                                ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT,
-                                cooldownTicks
-                        )
-                )
+                .delayedComponent(DataComponents.BLOCKS_ATTACKS,
+                        ctx -> ShieldLibUtils.withCooldownTicks(
+                                ShieldLibUtils.vanillaShieldBlocksAttacks(ctx), cooldownTicks))
         );
     }
 

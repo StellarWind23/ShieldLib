@@ -1,5 +1,6 @@
 package com.github.stellarwind22.shieldlib.mixin;
 
+import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -26,6 +27,6 @@ public class ItemsMixin {
         return properties
                 .durability(ShieldLibConfig.vanilla_shield_durability)
                 .enchantable(ShieldLibConfig.vanilla_shield_enchantability)
-                .component(DataComponents.BLOCKS_ATTACKS, ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT);
+                .delayedComponent(DataComponents.BLOCKS_ATTACKS, ShieldLibUtils::vanillaShieldBlocksAttacks);
     }
 }
