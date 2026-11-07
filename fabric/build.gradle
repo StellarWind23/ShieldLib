@@ -89,9 +89,9 @@ shadowJar {
 assemble.dependsOn shadowJar
 
 tasks.register("extractRemappedJar", Copy) {
-    dependsOn("remapJar")
+    dependsOn("shadowJar")
 
-    from(zipTree(remapJar.archiveFile))
+    from(zipTree(tasks.named("shadowJar").flatMap { it.archiveFile }))
     into(layout.buildDirectory.dir("tmp/remapped"))
 
     exclude 'data/**'

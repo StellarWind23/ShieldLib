@@ -68,12 +68,23 @@ processResources {
     }
 }
 
+jar {
+    archiveClassifier = 'dev'
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = ''   // this is the final, distributable jar
+}
+
+assemble.dependsOn shadowJar
+
 "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
 tasks.register("extractRemappedJar", Copy) {
-    dependsOn("remapJar")
+    dependsOn("shadowJar")
 
-    from(zipTree(remapJar.archiveFile))
+    from(zipTree(tasks.named("shadowJar").flatMap { it.archiveFile }))
     into(layout.buildDirectory.dir("tmp/remapped"))
 
     exclude 'data/**'
