@@ -31,7 +31,6 @@ bin/
 # fabric
 
 run/
-<<<<<<< HEAD
 tmp/
 
 # helper scripts & templates
@@ -43,6 +42,3 @@ _*.png.mcmeta
 _*.bin
 
 !scripts/*.py
-=======
-tmp/
->>>>>>> old/main

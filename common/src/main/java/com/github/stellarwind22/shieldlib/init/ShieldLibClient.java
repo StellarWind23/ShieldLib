@@ -7,43 +7,28 @@ import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
-<<<<<<< HEAD
 import com.github.stellarwind22.shieldlib.lib.registry.ShieldTextureOverride;
-=======
->>>>>>> old/main
 import com.github.stellarwind22.shieldlib.mixin.client.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.client.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
-<<<<<<< HEAD
-=======
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
->>>>>>> old/main
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Holder;
-<<<<<<< HEAD
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-=======
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
->>>>>>> old/main
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.phys.Vec2;
-<<<<<<< HEAD
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;
@@ -64,26 +49,6 @@ public class ShieldLibClient {
     public static final Identifier SHIELD_ATLAS_LOCATION = Identifier.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
     public static final ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
-=======
-
-import java.util.*;
-
-@Environment(EnvType.CLIENT)
-public class ShieldLibClient {
-
-    public static final ResourceLocation TOWER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "tower_shield");
-    public static final ResourceLocation BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
-    public static final ResourceLocation HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "heater_shield");
-    public static final ResourceLocation TARGE_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield");
-    public static final ResourceLocation SPIKED_TOWER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_tower_shield");
-    public static final ResourceLocation SPIKED_BUCKLER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_buckler_shield");
-    public static final ResourceLocation SPIKED_HEATER_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_heater_shield");
-    public static final ResourceLocation SPIKED_TARGE_SHIELD_MODEL_TYPE = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "spiked_targe_shield");
-
-    public static final ResourceLocation SHIELD_ATLAS_LOCATION = ResourceLocation.withDefaultNamespace("textures/atlas/shield_patterns.png");
-
-    public static final ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
->>>>>>> old/main
 
     public static boolean IS_DEV;
 
@@ -131,11 +96,7 @@ public class ShieldLibClient {
                 SpikedTargeShieldModelRenderer.Unbaked.CODEC
         );
 
-<<<<<<< HEAD
         EntityModelLayerRegistry.register(BucklerShieldModel.LOCATION,       BucklerShieldModel::createLayer);
-=======
-        EntityModelLayerRegistry.register(BucklerShieldLibModel.LOCATION,       BucklerShieldLibModel::createLayer);
->>>>>>> old/main
         EntityModelLayerRegistry.register(HeaterShieldModel.LOCATION,           HeaterShieldModel::createLayer);
         EntityModelLayerRegistry.register(TargeShieldModel.LOCATION,            TargeShieldModel::createLayer);
         EntityModelLayerRegistry.register(SpikedTowerShieldModel.LOCATION,      SpikedTowerShieldModel::createLayer);
@@ -243,13 +204,8 @@ public class ShieldLibClient {
         return getShapedBannerMaterial(shape, bannerPattern.value().assetId());
     }
 
-<<<<<<< HEAD
     public static Material getShapedBannerMaterial(String shape, Identifier assetId) {
         Map<Identifier, Material> map = SheetsAccessor.getShieldMaterials();
-=======
-    public static Material getShapedBannerMaterial(String shape, ResourceLocation assetId) {
-        Map<ResourceLocation, Material> map = SheetsAccessor.getShieldMaterials();
->>>>>>> old/main
 
         if(!Objects.equals(shape, "tower")) {
             assetId = assetId.withPrefix(shape + "_");
@@ -259,7 +215,6 @@ public class ShieldLibClient {
         Objects.requireNonNull(mapper);
         return map.computeIfAbsent(assetId, mapper::apply);
     }
-<<<<<<< HEAD
 
     @SuppressWarnings("unused")
     public static void registerTextureOverride(ShieldTextureOverride shieldTextureOverride) { textureOverrides.add(shieldTextureOverride); }
@@ -271,6 +226,4 @@ public class ShieldLibClient {
         }
         return null;
     }
-=======
->>>>>>> old/main
 }

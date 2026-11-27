@@ -5,11 +5,7 @@ import com.github.stellarwind22.shieldlib.lib.component.ShieldInformation;
 import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-<<<<<<< HEAD
 import net.minecraft.resources.Identifier;
-=======
-import net.minecraft.resources.ResourceLocation;
->>>>>>> old/main
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
@@ -378,11 +374,7 @@ public class ShieldLibUtils {
         );
     }
 
-<<<<<<< HEAD
     public static int getEnchantmentLevel(Identifier enchantmentId, ItemStack itemStack) {
-=======
-    public static int getEnchantmentLevel(ResourceLocation enchantmentId, ItemStack itemStack) {
->>>>>>> old/main
 
         if(itemStack == null) return 0;
 
@@ -392,11 +384,7 @@ public class ShieldLibUtils {
         for (Holder<Enchantment> holder : enchants.keySet()) {
 
             holder.unwrapKey().ifPresent(key -> {
-<<<<<<< HEAD
                 if(key.identifier().equals(enchantmentId)) {
-=======
-                if(key.location().equals(enchantmentId)) {
->>>>>>> old/main
                     result.set(enchants.getLevel(holder));
                 }
             });
@@ -405,11 +393,7 @@ public class ShieldLibUtils {
     }
 
     public static String getTranslationKey(TagKey<Item> key) {
-<<<<<<< HEAD
         Identifier location = key.location();
-=======
-        ResourceLocation location = key.location();
->>>>>>> old/main
         return "tag.item." + location.getNamespace() + "." + location.getPath().replace('/', '.');
     }
 }

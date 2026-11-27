@@ -14,10 +14,7 @@ import net.minecraft.world.item.enchantment.Repairable;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-<<<<<<< HEAD
 import org.jspecify.annotations.NonNull;
-=======
->>>>>>> old/main
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -195,29 +192,17 @@ public class ShieldLibItem extends Item {
     }
 
     @Override
-<<<<<<< HEAD
     public @NotNull ItemUseAnimation getUseAnimation(@NonNull ItemStack stack) {
-=======
-    public @NotNull ItemUseAnimation getUseAnimation(ItemStack stack) {
->>>>>>> old/main
         return ItemUseAnimation.BLOCK;
     }
 
     @Override
-<<<<<<< HEAD
     public int getUseDuration(@NonNull ItemStack itemStack, @NonNull LivingEntity user) {
-=======
-    public int getUseDuration(ItemStack itemStack, LivingEntity user) {
->>>>>>> old/main
         return 72000;
     }
 
     @Override
-<<<<<<< HEAD
     public @NotNull InteractionResult use(@NonNull Level level, Player player, @NonNull InteractionHand hand) {
-=======
-    public @NotNull InteractionResult use(Level level, Player player, InteractionHand hand) {
->>>>>>> old/main
         player.startUsingItem(hand);
         return InteractionResult.CONSUME;
     }

@@ -5,15 +5,12 @@
 
 ### We also provide event hooks & modifier registries for shields and shield enchantments for creating custom effects with them by modifying blocking, disabling, movement, or cooldown.
 
-<<<<<<< HEAD
 ---
 
 ## NOTICE: This Repo is a reupload, I completely lost access to my account & a fork doesn't give you full functionality: [Original Page](https://github.com/StellarWind22/ShieldLib)
 
 ---
 
-=======
->>>>>>> old/main
 ## Enchanting:
 ![Vanilla shield being enchanted](docs/image/showcase_enchanting.png)
 
@@ -24,11 +21,7 @@
 ![Vanilla shield with a new tooltip saying that when it's hit by an axe it will have 5 seconds of cooldown](docs/image/showcase_tooltip.png)
 
 ### Pages:
-<<<<<<< HEAD
 - [Github](https://github.com/StellarWind23/Shield-Lib)
-=======
-- [Github](https://github.com/StellarWind22/Shield-Lib)
->>>>>>> old/main
 - [Modrinth](https://modrinth.com/mod/shieldlib)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/shield-lib)
 

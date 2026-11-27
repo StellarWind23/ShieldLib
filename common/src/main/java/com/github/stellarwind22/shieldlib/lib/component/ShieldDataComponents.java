@@ -6,11 +6,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-<<<<<<< HEAD
 import net.minecraft.resources.Identifier;
-=======
-import net.minecraft.resources.ResourceLocation;
->>>>>>> old/main
 
 import java.util.function.UnaryOperator;
 
@@ -33,11 +29,7 @@ public class ShieldDataComponents {
 
     private static <T> RegistrySupplier<DataComponentType<T>> registerComponent(String name, UnaryOperator<DataComponentType.Builder<T>> unaryOperator) {
         return SHIELD_COMPONENTS.register(name, () -> {
-<<<<<<< HEAD
             ResourceKey.create(Registries.DATA_COMPONENT_TYPE, Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, name));
-=======
-            ResourceKey.create(Registries.DATA_COMPONENT_TYPE, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, name));
->>>>>>> old/main
             return unaryOperator.apply(DataComponentType.builder()).build();
         });
     }

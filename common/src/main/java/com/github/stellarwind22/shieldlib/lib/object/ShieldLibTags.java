@@ -2,11 +2,7 @@ package com.github.stellarwind22.shieldlib.lib.object;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
 import net.minecraft.core.registries.Registries;
-<<<<<<< HEAD
 import net.minecraft.resources.Identifier;
-=======
-import net.minecraft.resources.ResourceLocation;
->>>>>>> old/main
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -57,7 +53,6 @@ public class ShieldLibTags {
     public static TagKey<Item> SHIELD_ENCHANTABLE;
 
     public static void init() {
-<<<<<<< HEAD
         C_AXE =              TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "tools/axe"));
         C_AXES =              TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "tools/axes"));
         C_SHIELD =              TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "tools/shield"));
@@ -65,14 +60,5 @@ public class ShieldLibTags {
         SUPPORTS_BANNER =       TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "supports_banner"));
         NO_TOOLTIP =            TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "no_tooltip"));
         SHIELD_ENCHANTABLE =    TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "enchantable/shield"));
-=======
-        C_AXE =              TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/axe"));
-        C_AXES =              TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/axes"));
-        C_SHIELD =              TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/shield"));
-        C_SHIELDS =              TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "tools/shields"));
-        SUPPORTS_BANNER =       TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "supports_banner"));
-        NO_TOOLTIP =            TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "no_tooltip"));
-        SHIELD_ENCHANTABLE =    TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "enchantable/shield"));
->>>>>>> old/main
     }
 }
