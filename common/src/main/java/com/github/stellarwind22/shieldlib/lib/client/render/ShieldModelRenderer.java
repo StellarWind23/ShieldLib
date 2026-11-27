@@ -48,7 +48,11 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
         Identifier override = ShieldLibClient.getOverrideTexture(components, model().shape());
         if (override != null) {
-            ShieldTexturedRendering.submit(model(), override, poseStack, collector, light, overlay, hasFoil, outlineColor);
+            poseStack.pushPose();
+            poseStack.scale(1.0F, -1.0F, -1.0F);
+            collector.submitModelPart(model().handle(), poseStack, RenderTypes.entitySolid(override), light, overlay, null, false, hasFoil, -1, null, outlineColor);
+            collector.submitModelPart(model().plate(), poseStack, RenderTypes.entitySolid(override), light, overlay, null, false, hasFoil, -1, null, outlineColor);
+            poseStack.popPose();
             return;
         }
 

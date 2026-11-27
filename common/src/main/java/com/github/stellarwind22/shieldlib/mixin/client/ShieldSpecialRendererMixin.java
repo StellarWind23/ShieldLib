@@ -1,9 +1,10 @@
 package com.github.stellarwind22.shieldlib.mixin.client;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
-import com.github.stellarwind22.shieldlib.lib.client.render.ShieldTexturedRendering;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.special.ShieldSpecialRenderer;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.Identifier;
@@ -27,7 +28,13 @@ public abstract class ShieldSpecialRendererMixin {
         Identifier texture = ShieldLibClient.getOverrideTexture(dataComponentMap, "vanilla");
         if (texture == null) return;
 
-        ShieldTexturedRendering.submit(model, model.handle(), model.plate(), texture, poseStack, submitNodeCollector, i, j, bl, k);
+        RenderType renderType = model.renderType(texture);
+        poseStack.pushPose();
+        poseStack.scale(1.0F, -1.0F, -1.0F);
+        submitNodeCollector.submitModelPart(model.handle(), poseStack, renderType, i, j, null, false, bl, -1, null, k);
+        submitNodeCollector.submitModelPart(model.plate(), poseStack, renderType, i, j, null, false, bl, -1, null, k);
+        poseStack.popPose();
+
         ci.cancel();
     }
 }
