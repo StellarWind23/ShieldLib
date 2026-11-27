@@ -30,9 +30,9 @@ repositories {
 }
 
 dependencies {
-    neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
-    modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
-    include "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    modImplementation "dev.architectury:architectury-neoforge:${rootProject.architectury_api_version}"
+    include "dev.architectury:architectury-neoforge:${rootProject.architectury_api_version}"
 
     //Midnight lib
     modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}+${project.minecraft_version}-neoforge"

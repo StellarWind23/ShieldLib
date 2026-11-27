@@ -1,6 +1,7 @@
 package com.github.stellarwind22.shieldlib.mixin.client;
 
 import com.github.stellarwind22.shieldlib.lib.client.render.ShieldTextureOverrides;
+import com.github.stellarwind22.shieldlib.lib.client.render.ShieldTexturedRendering;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.ShieldSpecialRenderer;
