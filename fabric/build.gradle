@@ -1,5 +1,9 @@
 plugins {
+<<<<<<< HEAD
     id 'com.gradleup.shadow'
+=======
+    id 'com.github.johnrengelman.shadow'
+>>>>>>> old/main
 }
 
 architectury {
@@ -30,10 +34,17 @@ repositories {
 }
 
 dependencies {
+<<<<<<< HEAD
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}+${rootProject.minecraft_version}"
     modImplementation "dev.architectury:architectury-fabric:${rootProject.architectury_api_version}"
     include "dev.architectury:architectury-fabric:${rootProject.architectury_api_version}"
+=======
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+    modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
+    include "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
+>>>>>>> old/main
 
     //Mod Menu
     modCompileOnly modRuntimeOnly ("com.terraformersmc:modmenu:${project.mod_menu_version}"), {
@@ -41,14 +52,20 @@ dependencies {
     }
 
     //Midnight lib
+<<<<<<< HEAD
     modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}+${project.minecraft_version}-fabric"
     include "maven.modrinth:midnightlib:${project.midnightlib_version}+${project.minecraft_version}-fabric"
+=======
+    modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
+    include "maven.modrinth:midnightlib:${project.midnightlib_version}-fabric"
+>>>>>>> old/main
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 }
 
 processResources {
+<<<<<<< HEAD
     def properties = [
             maven_group              : rootProject.maven_group,
             modid                    : rootProject.modid,
@@ -71,6 +88,12 @@ processResources {
 
     filesMatching('fabric.mod.json') {
         expand properties
+=======
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand version: project.version
+>>>>>>> old/main
     }
 }
 

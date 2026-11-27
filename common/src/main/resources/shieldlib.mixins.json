@@ -7,15 +7,24 @@
     "client.ItemInHandRendererMixin",
     "client.LocalPlayerMixin",
     "client.SheetsAccessor",
+<<<<<<< HEAD
     "client.ShieldSpecialRendererMixin",
+=======
+>>>>>>> old/main
     "client.SpecialModelRenderersAccessor"
   ],
   "mixins": [
     "EntityMixin",
     "ItemsMixin",
+<<<<<<< HEAD
     "LivingEntityMixin",
     "RecipeMixin",
     "client.ItemStackMixin"
+=======
+    "client.ItemStackMixin",
+    "LivingEntityMixin",
+    "RecipeMixin"
+>>>>>>> old/main
   ],
   "injectors": {
     "defaultRequire": 1

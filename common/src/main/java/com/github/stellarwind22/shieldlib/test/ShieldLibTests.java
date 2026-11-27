@@ -13,7 +13,11 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+<<<<<<< HEAD
 import net.minecraft.resources.Identifier;
+=======
+import net.minecraft.resources.ResourceLocation;
+>>>>>>> old/main
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -37,8 +41,13 @@ public class ShieldLibTests {
     protected static RegistrySupplier<Item> SPIKED_HEATER_SHIELD;
     protected static RegistrySupplier<Item> SPIKED_TARGE_SHIELD;
 
+<<<<<<< HEAD
     protected static final Identifier REFLECT_ID = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
     protected static final Identifier RECOVERY_ID = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "recovery");
+=======
+    protected static ResourceLocation REFLECT_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "reflect");
+    protected static ResourceLocation RECOVERY_ID = ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "recovery");
+>>>>>>> old/main
 
     public static void init() {
 
@@ -179,7 +188,11 @@ public class ShieldLibTests {
 
     private static <T extends Item> RegistrySupplier<T> registerItem(String name, Function<Item.Properties, T> constructor) {
         return TEST_ITEMS.register(name, () -> {
+<<<<<<< HEAD
             ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, name));
+=======
+            ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, name));
+>>>>>>> old/main
             Item.Properties properties = new Item.Properties();
             properties = properties.setId(key);
             return constructor.apply(properties);

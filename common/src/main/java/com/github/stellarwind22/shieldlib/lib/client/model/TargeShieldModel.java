@@ -1,11 +1,17 @@
 package com.github.stellarwind22.shieldlib.lib.client.model;
 
 import com.github.stellarwind22.shieldlib.init.ShieldLib;
+<<<<<<< HEAD
+=======
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+>>>>>>> old/main
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+<<<<<<< HEAD
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
@@ -18,6 +24,20 @@ public class TargeShieldModel extends Model<Unit> implements ShieldModel {
 
     public TargeShieldModel(ModelPart root) {
         super(root, RenderTypes::entitySolid);
+=======
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
+
+@Environment(EnvType.CLIENT)
+public class TargeShieldModel extends Model implements ShieldModel {
+
+    private final ModelPart plate;
+    private final ModelPart handle;
+    public static final ModelLayerLocation LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ShieldLib.MOD_ID, "targe_shield"), "main");
+
+    public TargeShieldModel(ModelPart root) {
+        super(root, RenderType::entitySolid);
+>>>>>>> old/main
         this.plate = root.getChild("plate");
         this.handle = root.getChild("handle");
     }
@@ -37,6 +57,10 @@ public class TargeShieldModel extends Model<Unit> implements ShieldModel {
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
+<<<<<<< HEAD
+=======
+    @Override public RenderType getRenderType(ResourceLocation location) {return this.renderType(location);}
+>>>>>>> old/main
     @Override public ModelPart getRoot() {return this.root; }
     @Override public ModelPart handle() { return this.handle; }
     @Override public ModelPart plate() { return this.plate; }

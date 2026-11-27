@@ -26,7 +26,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+<<<<<<< HEAD
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+=======
+import net.minecraft.world.entity.projectile.AbstractArrow;
+>>>>>>> old/main
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.BlocksAttacks;
@@ -257,6 +261,10 @@ public final class ShieldLib {
         return cooldown;
     }
 
+<<<<<<< HEAD
+=======
+    @Environment(EnvType.CLIENT)
+>>>>>>> old/main
     public static Set<Pair<String, Float>> getTagTranslations(ShieldInformation shieldInformation) {
         Set<Pair<String, Float>> set = new HashSet<>();
 

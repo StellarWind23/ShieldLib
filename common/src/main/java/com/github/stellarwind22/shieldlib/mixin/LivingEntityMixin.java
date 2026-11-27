@@ -34,11 +34,16 @@ public abstract class LivingEntityMixin {
             method = "applyItemBlocking(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)F",
             cancellable = true
     )
+<<<<<<< HEAD
     private void applyItemBlockingReturn(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Float> cir) {
+=======
+    private void applyItemBlockingReturn(ServerLevel level, DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
+>>>>>>> old/main
         LivingEntity self = (LivingEntity) (Object) this;
         ItemStack blockingItem = self.getItemBlockingWith();
         InteractionHand hand = self.getUsedItemHand();
 
+<<<<<<< HEAD
         EventResult result = ShieldEvents.CAN_BLOCK.invoker().tryBlock(serverLevel, self, damageSource, f, hand, blockingItem);
 
         if(result != EventResult.pass()) {
@@ -47,6 +52,16 @@ public abstract class LivingEntityMixin {
         }
 
         ShieldEvents.BLOCK.invoker().onBlock(serverLevel, self, damageSource, f, hand, blockingItem);
+=======
+        EventResult result = ShieldEvents.CAN_BLOCK.invoker().tryBlock(level, self, source, amount, hand, blockingItem);
+
+        if(result != EventResult.pass()) {
+            ShieldEvents.BLOCK_FAIL.invoker().onFail(level, self, source, amount, hand, blockingItem);
+            cir.setReturnValue(0F);
+        }
+
+        ShieldEvents.BLOCK.invoker().onBlock(level, self, source, amount, hand, blockingItem);
+>>>>>>> old/main
     }
 
     @Inject(
