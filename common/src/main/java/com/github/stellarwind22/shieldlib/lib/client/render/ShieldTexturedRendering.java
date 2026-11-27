@@ -6,7 +6,6 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.Identifier;
 
 public final class ShieldTexturedRendering {
@@ -18,8 +17,8 @@ public final class ShieldTexturedRendering {
         RenderType renderType = model.renderType(texture);
         ps.pushPose();
         ps.scale(1.0F, -1.0F, -1.0F);
-        out.submitModelPart(handle, ps, renderType, light, overlay, (TextureAtlasSprite) null, false, false, -1, null, outlineColor);
-        out.submitModelPart(plate, ps, renderType, light, overlay, (TextureAtlasSprite) null, false, foil, -1, null, outlineColor);
+        out.submitModelPart(handle, ps, renderType, light, overlay, null, false, false, -1, null, outlineColor);
+        out.submitModelPart(plate, ps, renderType, light, overlay, null, false, foil, -1, null, outlineColor);
         ps.popPose();
     }
 

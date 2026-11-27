@@ -1,6 +1,6 @@
 package com.github.stellarwind22.shieldlib.mixin.client;
 
-import com.github.stellarwind22.shieldlib.lib.client.render.ShieldTextureOverrides;
+import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import com.github.stellarwind22.shieldlib.lib.client.render.ShieldTexturedRendering;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -24,7 +24,7 @@ public abstract class ShieldSpecialRendererMixin {
 
     @Inject(method = "submit", at = @At("HEAD"), cancellable = true)
     private void shieldlib$textureOverride(DataComponentMap dataComponentMap, ItemDisplayContext itemDisplayContext, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int j, boolean bl, int k, CallbackInfo ci) {
-        Identifier texture = ShieldTextureOverrides.find(dataComponentMap, "vanilla");
+        Identifier texture = ShieldLibClient.getOverrideTexture(dataComponentMap, "vanilla");
         if (texture == null) return;
 
         ShieldTexturedRendering.submit(model, model.handle(), model.plate(), texture, poseStack, submitNodeCollector, i, j, bl, k);

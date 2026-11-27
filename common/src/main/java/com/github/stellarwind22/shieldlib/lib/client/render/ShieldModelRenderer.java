@@ -46,7 +46,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
     @Override
     default void submit(@Nullable DataComponentMap components, @NonNull ItemDisplayContext ctx, @NonNull PoseStack poseStack, @NonNull SubmitNodeCollector collector, int light, int overlay, boolean hasFoil, int outlineColor) {
 
-        Identifier override = ShieldTextureOverrides.find(components, model().shape());
+        Identifier override = ShieldLibClient.getOverrideTexture(components, model().shape());
         if (override != null) {
             ShieldTexturedRendering.submit(model(), override, poseStack, collector, light, overlay, hasFoil, outlineColor);
             return;

@@ -7,6 +7,7 @@ import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
+import com.github.stellarwind22.shieldlib.lib.registry.ShieldTextureOverride;
 import com.github.stellarwind22.shieldlib.mixin.client.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.client.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
@@ -19,6 +20,7 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -27,10 +29,13 @@ import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.phys.Vec2;
+import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
 public class ShieldLibClient {
+
+    private static final List<ShieldTextureOverride> textureOverrides = new ArrayList<>();
 
     public static final Identifier TOWER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "tower_shield");
     public static final Identifier BUCKLER_SHIELD_MODEL_TYPE = Identifier.fromNamespaceAndPath(ShieldLib.MOD_ID, "buckler_shield");
@@ -209,5 +214,16 @@ public class ShieldLibClient {
         MaterialMapper mapper = Sheets.SHIELD_MAPPER;
         Objects.requireNonNull(mapper);
         return map.computeIfAbsent(assetId, mapper::apply);
+    }
+
+    @SuppressWarnings("unused")
+    public static void registerTextureOverride(ShieldTextureOverride shieldTextureOverride) { textureOverrides.add(shieldTextureOverride); }
+
+    public static @Nullable Identifier getOverrideTexture(@Nullable DataComponentMap components, String shape) {
+        for (ShieldTextureOverride provider : textureOverrides) {
+            Identifier texture = provider.textureFor(components, shape);
+            if (texture != null) return texture;
+        }
+        return null;
     }
 }
