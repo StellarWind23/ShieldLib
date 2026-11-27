@@ -44,12 +44,15 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
     }
 
     @Override
-    default void submit(@Nullable DataComponentMap components, @NonNull ItemDisplayContext ctx,
-                        PoseStack poseStack, @NonNull SubmitNodeCollector collector,
-                        int light, int overlay, boolean hasFoil, int outlineColor) {
+    default void submit(@Nullable DataComponentMap components, @NonNull ItemDisplayContext ctx, @NonNull PoseStack poseStack, @NonNull SubmitNodeCollector collector, int light, int overlay, boolean hasFoil, int outlineColor) {
 
-        BannerPatternLayers patterns = components == null ? BannerPatternLayers.EMPTY
-                : components.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
+        Identifier override = ShieldTextureOverrides.find(components, model().shape());
+        if (override != null) {
+            ShieldTexturedRendering.submit(model(), override, poseStack, collector, light, overlay, hasFoil, outlineColor);
+            return;
+        }
+
+        BannerPatternLayers patterns = components == null ? BannerPatternLayers.EMPTY : components.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
         DyeColor color = components == null ? null : components.get(DataComponents.BASE_COLOR);
         boolean hasPatterns = !patterns.layers().isEmpty() || color != null;
 
