@@ -11,7 +11,6 @@ public final class ShieldLibFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-
         ShieldLibClient.init(FabricLoader.getInstance().isDevelopmentEnvironment());
     }
 }
