@@ -7,7 +7,7 @@ import com.github.stellarwind22.shieldlib.lib.config.ShieldLibConfig;
 import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
-import com.github.stellarwind22.shieldlib.lib.registry.ShieldTextureOverride;
+import com.github.stellarwind22.shieldlib.lib.registry.client.ShieldTextureOverride;
 import com.github.stellarwind22.shieldlib.mixin.client.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.client.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;

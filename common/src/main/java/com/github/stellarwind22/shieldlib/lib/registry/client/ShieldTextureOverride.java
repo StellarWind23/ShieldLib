@@ -1,4 +1,4 @@
-package com.github.stellarwind22.shieldlib.lib.registry;
+package com.github.stellarwind22.shieldlib.lib.registry.client;
 
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.Identifier;

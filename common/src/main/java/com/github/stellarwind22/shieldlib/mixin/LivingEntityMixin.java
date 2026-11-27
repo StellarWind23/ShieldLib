@@ -54,7 +54,7 @@ public abstract class LivingEntityMixin {
             method = "blockUsingItem",
             cancellable = true
     )
-    private void blockUsingItem(ServerLevel level, LivingEntity attacker, CallbackInfo ci) {
+    private void blockUsingItem(ServerLevel serverLevel, LivingEntity livingEntity, CallbackInfo ci) {
 
         LivingEntity self = (LivingEntity) (Object) this;
         boolean isPlayer = self instanceof Player;
@@ -64,24 +64,24 @@ public abstract class LivingEntityMixin {
             ItemStack shield = self.getItemBlockingWith();
             BlocksAttacks blocksAttacks = shield != null ? shield.get(DataComponents.BLOCKS_ATTACKS) : null;
 
-            float secondsToDisable = attacker.getSecondsToDisableBlocking();
+            float secondsToDisable = livingEntity.getSecondsToDisableBlocking();
             secondsToDisable = ShieldLib.getCooldownSecondsWithModifiers((Player) self, shield, blocksAttacks, secondsToDisable);
 
             if (secondsToDisable > 0 && blocksAttacks != null) {
 
-                ShieldEvents.DISABLE.invoker().onDisable(level, attacker, self, isPlayer, self.getUsedItemHand(), shield, secondsToDisable);
+                ShieldEvents.DISABLE.invoker().onDisable(serverLevel, livingEntity, self, isPlayer, self.getUsedItemHand(), shield, secondsToDisable);
 
                 if(ShieldLibConfig.universal_disabling) {
                     Iterable<Holder<Item>> holders = BuiltInRegistries.ITEM.getTagOrEmpty(ShieldLibTags.C_SHIELD);
 
                     for(Holder<Item> holder : holders) {
-                        blocksAttacks.disable(level, self, secondsToDisable, new ItemStack(holder.value()));
+                        blocksAttacks.disable(serverLevel, self, secondsToDisable, new ItemStack(holder.value()));
                     }
 
                     ci.cancel();
 
                 } else {
-                    blocksAttacks.disable(level, self, secondsToDisable, shield);
+                    blocksAttacks.disable(serverLevel, self, secondsToDisable, shield);
                     ci.cancel();
                 }
             }

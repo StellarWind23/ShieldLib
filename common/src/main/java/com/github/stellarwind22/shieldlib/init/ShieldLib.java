@@ -14,8 +14,6 @@ import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.datafixers.util.Pair;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.EntityEvent;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
