@@ -7,6 +7,8 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.component.DataComponentMap;
@@ -45,55 +47,47 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
     @Override
     default void submit(@Nullable DataComponentMap components, @NonNull PoseStack poseStack, @NonNull SubmitNodeCollector collector, int light, int overlay, boolean hasFoil, int outlineColor) {
 
-        poseStack.scale(1.0F, -1.0F, -1.0F);
+        Identifier overlayTexture = ShieldLibClient.getOverrideTexture(components, model().shape());
 
-        Identifier override = ShieldLibClient.getOverrideTexture(components, model().shape());
-        if (override != null) {
-            poseStack.pushPose();
-            poseStack.scale(1.0F, -1.0F, -1.0F);
-            collector.submitModelPart(model().handle(), poseStack, RenderTypes.entitySolid(override), light, overlay, null, false, hasFoil, -1, null, outlineColor);
-            collector.submitModelPart(model().plate(), poseStack, RenderTypes.entitySolid(override), light, overlay, null, false, hasFoil, -1, null, outlineColor);
-            poseStack.popPose();
-            return;
-        }
-
-        BannerPatternLayers patterns = components != null
-                ? components.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY)
-                : BannerPatternLayers.EMPTY;
+        BannerPatternLayers patterns = components != null ? components.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY) : BannerPatternLayers.EMPTY;
         DyeColor baseColor = components != null ? components.get(DataComponents.BASE_COLOR) : null;
+
+        // An override replaces vanilla banner decoration, so it always sits on the plain no-pattern base
         boolean hasPatterns = !patterns.layers().isEmpty() || baseColor != null;
 
-        Model<Unit> model = model().asModel();
-        SpriteId base = new SpriteId(ShieldLibClient.SHIELD_ATLAS_LOCATION,
-                hasPatterns ? baseModel() : baseModelNoPat());
+        poseStack.pushPose();
+        poseStack.scale(1.0F, -1.0F, -1.0F);
 
-        collector.submitModel(model, Unit.INSTANCE, poseStack, light, overlay, -1,
-                base, sprites(), outlineColor, null);
+        try {
+            Model<Unit> model = model().asModel();
+            SpriteId base = new SpriteId(ShieldLibClient.SHIELD_ATLAS_LOCATION, hasPatterns ? baseModel() : baseModelNoPat());
 
-        if (hasPatterns) {
-            submitPatternLayer(model, poseStack, collector, light, overlay,
-                    ShieldLibClient.getShapedSprite(model().shape(), Identifier.withDefaultNamespace("base")),
-                    Objects.requireNonNullElse(baseColor, DyeColor.WHITE));
+            //Draw base shield model
+            collector.submitModel(model, Unit.INSTANCE, poseStack, light, overlay, -1, base, sprites(), outlineColor, null);
 
-            for (int i = 0; i < 16 && i < patterns.layers().size(); i++) {
-                BannerPatternLayers.Layer layer = patterns.layers().get(i);
-                submitPatternLayer(model, poseStack, collector, light, overlay,
-                        ShieldLibClient.getShapedSprite(model().shape(), layer.pattern()),
-                        layer.color());
+            //Handle override
+            if (overlayTexture != null) {
+                collector.submitModelPart(model().plate(), poseStack, RenderTypes.entitySolid(overlayTexture), light, overlay, sprites().get(overlayTexture), false,false, -1, null, outlineColor);
+
+            } else if (hasPatterns) {   //Handle normal patterns
+
+                submitPatternLayer(model, poseStack, collector, light, overlay, ShieldLibClient.getShapedSprite(model().shape(), Identifier.withDefaultNamespace("base")), Objects.requireNonNullElse(baseColor, DyeColor.WHITE));
+
+                for (int i = 0; i < 16 && i < patterns.layers().size(); i++) {
+                    BannerPatternLayers.Layer layer = patterns.layers().get(i);
+                    submitPatternLayer(model, poseStack, collector, light, overlay, ShieldLibClient.getShapedSprite(model().shape(), layer.pattern()), layer.color());
+                }
             }
-        }
 
-        if (hasFoil) {
-            collector.submitModel(model, Unit.INSTANCE, poseStack, RenderTypes.entityGlint(),
-                    light, overlay, -1, sprites().get(base), 0, null);
+            if (hasFoil) {
+                collector.submitModel(model, Unit.INSTANCE, poseStack, RenderTypes.entityGlint(), light, overlay, -1, sprites().get(base), 0, null);
+            }
+        } finally {
+            poseStack.popPose();
         }
     }
 
-    default void submitPatternLayer(Model<Unit> model, PoseStack poseStack, SubmitNodeCollector collector,
-                                    int light, int overlay, SpriteId sprite, DyeColor color) {
-        collector.submitModel(model, Unit.INSTANCE, poseStack,
-                sprite.renderType(RenderTypes::bannerPattern),
-                light, overlay, color.getTextureDiffuseColor(),
-                sprites().get(sprite), 0, null);
+    default void submitPatternLayer(Model<Unit> model, PoseStack poseStack, SubmitNodeCollector collector, int light, int overlay, SpriteId sprite, DyeColor color) {
+        collector.submitModel(model, Unit.INSTANCE, poseStack, sprite.renderType(RenderTypes::bannerPattern), light, overlay, color.getTextureDiffuseColor(), sprites().get(sprite), 0, null);
     }
 }

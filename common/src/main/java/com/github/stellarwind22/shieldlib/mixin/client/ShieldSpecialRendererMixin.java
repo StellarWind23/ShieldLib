@@ -4,6 +4,7 @@ import com.github.stellarwind22.shieldlib.init.ShieldLibClient;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.special.ShieldSpecialRenderer;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.Identifier;
@@ -30,8 +31,13 @@ public abstract class ShieldSpecialRendererMixin {
 
         poseStack.pushPose();
         poseStack.scale(1.0F, -1.0F, -1.0F);
+
+        //Handle base model
         submitNodeCollector.submitModelPart(model.handle(), poseStack, renderType, lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
         submitNodeCollector.submitModelPart(model.plate(), poseStack, renderType, lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
+
+        //Add ooverlay
+        submitNodeCollector.submitModelPart(model.plate(), poseStack, RenderTypes.entitySolid(texture), lightCoords, overlayCoords, null, false, false, -1, null, outlineColor);
         poseStack.popPose();
 
         ci.cancel();
