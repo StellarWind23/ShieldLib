@@ -8,17 +8,15 @@ import com.github.stellarwind22.shieldlib.lib.client.event.ShieldClientEvents;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibTags;
 import com.github.stellarwind22.shieldlib.lib.object.ShieldLibUtils;
 import com.github.stellarwind22.shieldlib.lib.registry.client.ShieldTextureOverride;
-import com.github.stellarwind22.shieldlib.mixin.client.SheetsAccessor;
 import com.github.stellarwind22.shieldlib.mixin.client.SpecialModelRenderersAccessor;
 import com.github.stellarwind22.shieldlib.test.ShieldLibTests;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
@@ -48,7 +46,8 @@ public class ShieldLibClient {
 
     public static final Identifier SHIELD_ATLAS_LOCATION = Identifier.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
-    public static final ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked>> ID_MAPPER = SpecialModelRenderersAccessor.getIDMapper();
+    public static final ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked<?>>> ID_MAPPER =
+            SpecialModelRenderersAccessor.getIDMapper();
 
     public static boolean IS_DEV;
 
@@ -184,13 +183,13 @@ public class ShieldLibClient {
                 String multiplierStr = String.valueOf(movementMultiplier * 100.0F).replaceAll("\\.0*$", "");
 
                 if (movementMultiplier > 0) {
-                        String movement = ("+" + multiplierStr);
-                        String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), movement);
-                        tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.BLUE));
+                    String movement = ("+" + multiplierStr);
+                    String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), movement);
+                    tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.BLUE));
 
                 } else if (movementMultiplier < 0) {
-                        String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), multiplierStr);
-                        tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.RED));
+                    String movementTranslated = String.format(Component.translatable("shieldlib.movement_tooltip.body").getString(), multiplierStr);
+                    tooltip.add(Component.literal(" " + movementTranslated).withStyle(ChatFormatting.RED));
                 }
             }
         });
@@ -200,26 +199,23 @@ public class ShieldLibClient {
         }
     }
 
-    public static Material getShapedBannerMaterial(String shape, Holder<BannerPattern> bannerPattern) {
-        return getShapedBannerMaterial(shape, bannerPattern.value().assetId());
+    private static final Map<Identifier, SpriteId> SHAPED_SPRITES = new HashMap<>();
+
+    public static SpriteId getShapedSprite(String shape, Holder<BannerPattern> pattern) {
+        return getShapedSprite(shape, pattern.value().assetId());
     }
 
-    public static Material getShapedBannerMaterial(String shape, Identifier assetId) {
-        Map<Identifier, Material> map = SheetsAccessor.getShieldMaterials();
-
-        if(!Objects.equals(shape, "tower")) {
+    public static SpriteId getShapedSprite(String shape, Identifier assetId) {
+        if (!Objects.equals(shape, "tower")) {
             assetId = assetId.withPrefix(shape + "_");
         }
-
-        MaterialMapper mapper = Sheets.SHIELD_MAPPER;
-        Objects.requireNonNull(mapper);
-        return map.computeIfAbsent(assetId, mapper::apply);
+        return SHAPED_SPRITES.computeIfAbsent(assetId, Sheets.SHIELD_MAPPER::apply);
     }
 
     @SuppressWarnings("unused")
     public static void registerTextureOverride(ShieldTextureOverride shieldTextureOverride) { textureOverrides.add(shieldTextureOverride); }
 
-    public static @Nullable Identifier getOverrideTexture(@Nullable DataComponentMap components, String shape) {
+    public static Identifier getOverrideTexture(@Nullable DataComponentMap components, String shape) {
         for (ShieldTextureOverride provider : textureOverrides) {
             Identifier texture = provider.textureFor(components, shape);
             if (texture != null) return texture;

@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class LocalPlayerMixin {
 
     @Inject(at = @At("RETURN"), method = "modifyInput", cancellable = true)
-    private void modifyInput(Vec2 vec2, CallbackInfoReturnable<Vec2> cir) {
-       Player player = (Player) (Object) this;
-       ItemStack stack = player.getUseItem();
+    private void modifyInput(Vec2 input, CallbackInfoReturnable<Vec2> cir) {
+        Player player = (Player) (Object) this;
+        ItemStack stack = player.getUseItem();
 
-       if(stack.has(DataComponents.BLOCKS_ATTACKS)) {
-           cir.setReturnValue(ShieldLib.getMovementWithModifiers(player, stack, stack.get(DataComponents.BLOCKS_ATTACKS), cir.getReturnValue()));
-       }
+        if(stack.has(DataComponents.BLOCKS_ATTACKS)) {
+            cir.setReturnValue(ShieldLib.getMovementWithModifiers(player, stack, stack.get(DataComponents.BLOCKS_ATTACKS), cir.getReturnValue()));
+        }
     }
 }

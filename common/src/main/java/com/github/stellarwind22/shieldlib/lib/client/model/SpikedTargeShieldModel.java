@@ -33,7 +33,7 @@ public class SpikedTargeShieldModel extends Model<Unit> implements ShieldModel {
                 .texOffs(0, 21).addBox(8.0F, -6.0F, -2.0F, 1.0F, 12.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 
-       plate.addOrReplaceChild("spikes", CubeListBuilder.create().texOffs(44, 0).addBox(-5.0F, -6.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+        plate.addOrReplaceChild("spikes", CubeListBuilder.create().texOffs(44, 0).addBox(-5.0F, -6.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(50, 0).addBox(-7.0F, 2.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(50, 3).addBox(-5.0F, 5.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(44, 0).addBox(4.0F, -6.0F, -4.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))

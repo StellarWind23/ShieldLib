@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.special.ShieldSpecialRenderer;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemDisplayContext;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,17 +21,17 @@ public abstract class ShieldSpecialRendererMixin {
     @Final
     private net.minecraft.client.model.object.equipment.ShieldModel model;
 
-    @Inject(method = "submit(Lnet/minecraft/core/component/DataComponentMap;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;IIZI)V", at = @At("HEAD"), cancellable = true)
-    private void shieldlib$textureOverride(DataComponentMap dataComponentMap, ItemDisplayContext itemDisplayContext, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int j, boolean bl, int k, CallbackInfo ci) {
-        Identifier texture = ShieldLibClient.getOverrideTexture(dataComponentMap, "vanilla");
+    @Inject(method = "submit(Lnet/minecraft/core/component/DataComponentMap;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;IIZI)V", at = @At("HEAD"), cancellable = true)
+    private void shieldlib$textureOverride(DataComponentMap components, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor, CallbackInfo ci) {
+        Identifier texture = ShieldLibClient.getOverrideTexture(components, "vanilla");
         if (texture == null) return;
 
         RenderType renderType = model.renderType(texture);
 
         poseStack.pushPose();
         poseStack.scale(1.0F, -1.0F, -1.0F);
-        submitNodeCollector.submitModelPart(model.handle(), poseStack, renderType, i, j, null, false, bl, -1, null, k);
-        submitNodeCollector.submitModelPart(model.plate(), poseStack, renderType, i, j, null, false, bl, -1, null, k);
+        submitNodeCollector.submitModelPart(model.handle(), poseStack, renderType, lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
+        submitNodeCollector.submitModelPart(model.plate(), poseStack, renderType, lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
         poseStack.popPose();
 
         ci.cancel();

@@ -6,7 +6,6 @@
   "client": [
     "client.ItemInHandRendererMixin",
     "client.LocalPlayerMixin",
-    "client.SheetsAccessor",
     "client.ShieldSpecialRendererMixin",
     "client.SpecialModelRenderersAccessor"
   ],
@@ -14,7 +13,6 @@
     "EntityMixin",
     "ItemsMixin",
     "LivingEntityMixin",
-    "RecipeMixin",
     "client.ItemStackMixin"
   ],
   "injectors": {

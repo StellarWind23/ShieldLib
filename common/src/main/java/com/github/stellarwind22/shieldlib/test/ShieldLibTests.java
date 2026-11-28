@@ -65,7 +65,7 @@ public class ShieldLibTests {
                 props -> new Item(
                         ShieldLibUtils.buildShieldProperties( props,
                                         COMPONENT_SHIELD_INFORMATION,
-                                        ShieldLibUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT
+                                        ShieldLibUtils::vanillaShieldBlocksAttacks
                                 )
                                 .durability(336)
                                 .repairable(Items.OAK_PLANKS)

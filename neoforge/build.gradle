@@ -30,17 +30,18 @@ repositories {
 }
 
 dependencies {
-    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
-    modImplementation "dev.architectury:architectury-neoforge:${rootProject.architectury_api_version}"
-    include "dev.architectury:architectury-neoforge:${rootProject.architectury_api_version}"
+    neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
+    implementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
+    include "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
 
-    //Midnight lib
-    modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}+${project.minecraft_version}-neoforge"
-    include "maven.modrinth:midnightlib:${project.midnightlib_version}+${project.minecraft_version}-neoforge"
+    // Midnight lib
+    implementation "maven.modrinth:codAaoxh:WQfVY6eb"
+    include "maven.modrinth:codAaoxh:WQfVY6eb"
 
-    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    common(project(':common')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 }
+
 
 processResources {
     def properties = [
@@ -67,19 +68,23 @@ processResources {
     }
 }
 
+jar {
+    archiveClassifier = 'dev'
+}
+
 shadowJar {
     configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
+    archiveClassifier = ''   // this is the final, distributable jar
 }
 
-remapJar {
-    input.set shadowJar.archiveFile
-}
+assemble.dependsOn shadowJar
+
+"dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
 tasks.register("extractRemappedJar", Copy) {
-    dependsOn("remapJar")
+    dependsOn("shadowJar")
 
-    from(zipTree(remapJar.archiveFile))
+    from(zipTree(tasks.named("shadowJar").flatMap { it.archiveFile }))
     into(layout.buildDirectory.dir("tmp/remapped"))
 
     exclude 'data/**'
