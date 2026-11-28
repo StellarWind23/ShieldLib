@@ -46,41 +46,37 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
     @Override
     default void submit(@Nullable DataComponentMap components, @NonNull ItemDisplayContext ctx, @NonNull PoseStack poseStack, @NonNull SubmitNodeCollector collector, int light, int overlay, boolean hasFoil, int outlineColor) {
 
-        Identifier override = ShieldLibClient.getOverrideTexture(components, model().shape());
-        if (override != null) {
-            poseStack.pushPose();
-            poseStack.scale(1.0F, -1.0F, -1.0F);
-            collector.submitModelPart(model().handle(), poseStack, RenderTypes.entitySolid(override), light, overlay, null, false, hasFoil, -1, null, outlineColor);
-            collector.submitModelPart(model().plate(), poseStack, RenderTypes.entitySolid(override), light, overlay, null, false, hasFoil, -1, null, outlineColor);
-            poseStack.popPose();
-            return;
-        }
+        Identifier overlayTexture = ShieldLibClient.getOverrideTexture(components, model().shape());
 
         BannerPatternLayers patterns = components == null ? BannerPatternLayers.EMPTY : components.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
         DyeColor color = components == null ? null : components.get(DataComponents.BASE_COLOR);
-        boolean hasPatterns = !patterns.layers().isEmpty() || color != null;
+
+        // An override replaces vanilla banner decoration, so it always sits on the plain no-pattern base
+        boolean hasPatterns = overlayTexture == null && (!patterns.layers().isEmpty() || color != null);
 
         poseStack.pushPose();
         poseStack.scale(1.0F, -1.0F, -1.0F);
         try {
-            Material mat = new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION,
-                    hasPatterns ? baseModel() : baseModelNoPat());
+            Material mat = new Material(ShieldLibClient.SHIELD_ATLAS_LOCATION, hasPatterns ? baseModel() : baseModelNoPat());
             TextureAtlasSprite sprite = materials().get(mat);
 
-            collector.submitModelPart(model().handle(), poseStack, RenderTypes.entitySolid(sprite.atlasLocation()),
-                    light, overlay, sprite, false, hasFoil, -1, null, outlineColor);
+            //Draw base shield model
+            collector.submitModelPart(model().handle(), poseStack, RenderTypes.entitySolid(sprite.atlasLocation()), light, overlay, sprite, false, hasFoil, -1, null, outlineColor);
+            collector.submitModelPart(model().plate(), poseStack, RenderTypes.entitySolid(sprite.atlasLocation()), light, overlay, sprite, false, hasFoil, -1, null, outlineColor);
 
-            collector.submitModelPart(model().plate(), poseStack, RenderTypes.entitySolid(sprite.atlasLocation()),
-                    light, overlay, sprite, false, hasFoil, -1, null, outlineColor);
-            if(hasPatterns) {
-                submitPatternLayer(poseStack, collector, light, overlay, model().plate(),
-                        ShieldLibClient.getShapedBannerMaterial(model().shape(), Identifier.withDefaultNamespace("base")),
-                        Objects.requireNonNullElse(color, DyeColor.WHITE), outlineColor);
+            //Handle override
+            if (overlayTexture != null) {
+                submitOverride(model().plate(), overlayTexture, poseStack, collector, light, overlay, outlineColor);
+
+
+
+            } else if (hasPatterns) {   //Handle normal patterns
+
+                submitPatternLayer(poseStack, collector, light, overlay, model().plate(), ShieldLibClient.getShapedBannerMaterial(model().shape(), Identifier.withDefaultNamespace("base")), Objects.requireNonNullElse(color, DyeColor.WHITE), outlineColor);
+
                 for (int i = 0; i < 16 && i < patterns.layers().size(); i++) {
                     var layer = patterns.layers().get(i);
-                    submitPatternLayer(poseStack, collector, light, overlay, model().plate(),
-                            ShieldLibClient.getShapedBannerMaterial(model().shape(), layer.pattern()),
-                            layer.color(), outlineColor);
+                    submitPatternLayer(poseStack, collector, light, overlay, model().plate(), ShieldLibClient.getShapedBannerMaterial(model().shape(), layer.pattern()), layer.color(), outlineColor);
                 }
             }
         } finally {
@@ -88,10 +84,13 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
         }
     }
 
-    default void submitPatternLayer(PoseStack poseStack, SubmitNodeCollector collector, int light, int overlay,
-                                    ModelPart part, Material material, DyeColor dye, int outlineColor) {
+    default void submitPatternLayer(PoseStack poseStack, SubmitNodeCollector collector, int light, int overlay, ModelPart part, Material material, DyeColor dye, int outlineColor) {
         TextureAtlasSprite sprite = materials().get(material);
         collector.submitModelPart(part, poseStack, RenderTypes.entityNoOutline(sprite.atlasLocation()),
                 light, overlay, sprite, false, false, dye.getTextureDiffuseColor(), null, outlineColor);
+    }
+
+    default void submitOverride(ModelPart plate, Identifier texture, PoseStack ps, SubmitNodeCollector out, int light, int overlayCoords, int outlineColor) {
+        out.submitModelPart(plate, ps, RenderTypes.entityNoOutline(texture), light, overlayCoords, null, false, false, -1, null, outlineColor);
     }
 }
