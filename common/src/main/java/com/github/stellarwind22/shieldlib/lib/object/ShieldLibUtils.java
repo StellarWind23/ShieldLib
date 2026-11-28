@@ -76,6 +76,7 @@ public class ShieldLibUtils {
      * @param itemStack stack to check.
      * @return true if the item (a shield) can support banner.
      */
+    @SuppressWarnings("unused")
     public static boolean supportsBanner(ItemStack itemStack) {
         return supportsBanner(itemStack.getItem());
     }
