@@ -66,9 +66,7 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
 
             //Handle override
             if (overlayTexture != null) {
-                submitOverride(model().plate(), overlayTexture, poseStack, collector, light, overlay, outlineColor);
-
-
+                collector.submitModelPart(model().plate(), poseStack, RenderTypes.entityNoOutline(overlayTexture), light, overlay, sprite, false,false, -1, null, outlineColor);
 
             } else if (hasPatterns) {   //Handle normal patterns
 
@@ -88,9 +86,5 @@ public interface ShieldModelRenderer extends SpecialModelRenderer<DataComponentM
         TextureAtlasSprite sprite = materials().get(material);
         collector.submitModelPart(part, poseStack, RenderTypes.entityNoOutline(sprite.atlasLocation()),
                 light, overlay, sprite, false, false, dye.getTextureDiffuseColor(), null, outlineColor);
-    }
-
-    default void submitOverride(ModelPart plate, Identifier texture, PoseStack ps, SubmitNodeCollector out, int light, int overlayCoords, int outlineColor) {
-        out.submitModelPart(plate, ps, RenderTypes.entityNoOutline(texture), light, overlayCoords, null, false, false, -1, null, outlineColor);
     }
 }
